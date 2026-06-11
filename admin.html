@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+  <meta charset="UTF-8">
+  <title>Painel Admin — Licenças</title>
+  <style>
+    body { font-family: Arial; padding: 20px; background: #f5f5f5; }
+    h1 { margin-bottom: 10px; }
+    button { padding: 10px 20px; margin: 5px 0; cursor: pointer; }
+    input, textarea { width: 100%; padding: 8px; margin: 5px 0; }
+    .box { background: white; padding: 20px; border-radius: 8px; margin-bottom: 20px; }
+    pre { background: #222; color: #0f0; padding: 10px; border-radius: 5px; }
+  </style>
+</head>
+<body>
+
+  <h1>Painel Admin — FaturaLite Licenças</h1>
+
+  <div class="box">
+    <h2>Criar Pagamento</h2>
+    <input id="name" placeholder="Nome">
+    <input id="email" placeholder="Email">
+    <input id="phone" placeholder="Telefone">
+    <button onclick="createPayment()">Criar Pagamento</button>
+  </div>
+
+  <div class="box">
+    <h2>Simular Pagamento</h2>
+    <input id="paymentId" placeholder="payment_id">
+    <input id="adminSecret" placeholder="adminSecret">
+    <button onclick="simulatePayment()">Simular Pagamento</button>
+  </div>
+
+  <div class="box">
+    <h2>Resultado</h2>
+    <pre id="output">Aguardando…</pre>
+  </div>
+
+  <script src="admin.js"></script>
+</body>
+</html>
