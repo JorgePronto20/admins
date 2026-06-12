@@ -88,6 +88,8 @@ function initApp() {
   document.getElementById("content").style.display = "block";
 
   showSection("dashboard");
+loadDashboard();
+
 }
 
 function logout() {
