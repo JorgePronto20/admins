@@ -17,8 +17,9 @@ async function listLicenses() {
 
   const data = await res.json();
 
-  if (!data.ok) {
-    document.getElementById("licenses").innerHTML = "<p>Erro ao carregar licenças.</p>";
+  // Se não houver dados, tratamos como base vazia
+  if (!data.ok || !Array.isArray(data.licenses)) {
+    document.getElementById("licenses").innerHTML = "<p>Nenhuma licença emitida.</p>";
     return;
   }
 
@@ -68,8 +69,14 @@ async function showLicenseDetails(key) {
   });
 
   const data = await res.json();
+
+  if (!data.ok || !Array.isArray(data.licenses)) {
+    document.getElementById("licenseDetails").textContent = "Nenhuma licença encontrada.";
+    return;
+  }
+
   const lic = data.licenses.find(x => x.license_key === key);
 
   document.getElementById("licenseDetails").textContent =
-    JSON.stringify(lic, null, 2);
+    lic ? JSON.stringify(lic, null, 2) : "Licença não encontrada.";
 }
