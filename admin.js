@@ -3,6 +3,9 @@
 // ===============================
 const API = "https://faturalite-licenses-prod.jorgepronto20.workers.dev";
 
+// Variável global para guardar o secret apenas enquanto a página está aberta
+let ADMIN_SECRET = "";
+
 
 // ===============================
 // LOGIN / AUTENTICAÇÃO
@@ -16,14 +19,13 @@ function doLogin() {
     return;
   }
 
-  saveAdminSecret(secret);
+  ADMIN_SECRET = secret; // guarda apenas em memória
+
   initApp();
 }
 
 function initApp() {
-  const secret = getAdminSecret();
-
-  if (!secret) {
+  if (!ADMIN_SECRET) {
     document.getElementById("login-screen").style.display = "block";
     document.getElementById("sidebar").style.display = "none";
     document.getElementById("content").style.display = "none";
@@ -34,8 +36,12 @@ function initApp() {
   document.getElementById("sidebar").style.display = "block";
   document.getElementById("content").style.display = "block";
 
-  // Secção inicial
   showSection("dashboard");
+}
+
+function logout() {
+  ADMIN_SECRET = "";
+  initApp();
 }
 
 
@@ -81,7 +87,7 @@ async function listPayments() {
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({
       action: "list",
-      adminSecret: getAdminSecret()
+      adminSecret: ADMIN_SECRET
     })
   });
 
@@ -143,7 +149,7 @@ async function simulatePayment() {
     body: JSON.stringify({
       action: "simulate-payment",
       payment_id,
-      adminSecret: getAdminSecret()
+      adminSecret: ADMIN_SECRET
     })
   });
 
@@ -160,7 +166,7 @@ async function simulatePaymentFromList(payment_id) {
     body: JSON.stringify({
       action: "simulate-payment",
       payment_id,
-      adminSecret: getAdminSecret()
+      adminSecret: ADMIN_SECRET
     })
   });
 
