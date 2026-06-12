@@ -15,7 +15,8 @@ async function createPayment() {
       action: "create-payment",
       name,
       email,
-      phone
+      phone,
+      adminSecret: ADMIN_SECRET
     })
   });
 
