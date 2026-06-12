@@ -141,37 +141,28 @@
     </div>
 
     <!-- LICENÇAS -->
-  <div id="licencas" class="section" style="display:none;">
-  <div class="box">
-    <h2>Licenças Emitidas</h2>
-    <button onclick="listLicenses()">Carregar Licenças</button>
-    <div id="licenses"></div>
-  </div>
+    <div id="licencas" class="section" style="display:none;">
+      <div class="box">
+        <h2>Licenças Emitidas</h2>
+        <button onclick="listLicenses()">Carregar Licenças</button>
+        <div id="licenses"></div>
+      </div>
 
-  <div class="box">
-    <h2>Detalhes</h2>
-    <pre id="licenseDetails">Seleciona uma licença…</pre>
-  </div>
-</div>
-
+      <div class="box">
+        <h2>Detalhes</h2>
+        <pre id="licenseDetails">Seleciona uma licença…</pre>
+      </div>
+    </div>
 
   </div>
 
   <!-- SCRIPTS -->
   <script src="components/ui.js"></script>
-<script src="components/auth.js"></script>
-<script src="components/payments.js"></script>
-<script src="components/licenses.js"></script>
-<script src="components/dashboard.js"></script>
-<script src="admin.js"></script>
-
-
-  <script>
-    function showSection(id) {
-      document.querySelectorAll(".section").forEach(sec => sec.style.display = "none");
-      document.getElementById(id).style.display = "block";
-    }
-  </script>
+  <script src="components/auth.js"></script>
+  <script src="components/payments.js"></script>
+  <script src="components/licenses.js"></script>
+  <script src="components/dashboard.js"></script>
+  <script src="admin.js"></script>
 
 </body>
 </html>
