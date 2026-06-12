@@ -3,39 +3,161 @@
 <head>
   <meta charset="UTF-8">
   <title>Painel Admin — Licenças</title>
+
   <style>
-    body { font-family: Arial; padding: 20px; background: #f5f5f5; }
-    h1 { margin-bottom: 10px; }
-    button { padding: 10px 20px; margin: 5px 0; cursor: pointer; }
-    input, textarea { width: 100%; padding: 8px; margin: 5px 0; }
-    .box { background: white; padding: 20px; border-radius: 8px; margin-bottom: 20px; }
-    pre { background: #222; color: #0f0; padding: 10px; border-radius: 5px; }
+    body { 
+      font-family: Arial; 
+      margin: 0; 
+      background: #f5f5f5;
+    }
+
+    /* Layout */
+    #sidebar {
+      width: 220px;
+      background: #222;
+      color: white;
+      height: 100vh;
+      position: fixed;
+      top: 0;
+      left: 0;
+      padding: 20px;
+      display: none;
+    }
+
+    #sidebar h2 {
+      margin-top: 0;
+      font-size: 20px;
+    }
+
+    #sidebar button {
+      width: 100%;
+      padding: 10px;
+      margin: 5px 0;
+      background: #444;
+      border: none;
+      color: white;
+      cursor: pointer;
+      text-align: left;
+    }
+
+    #sidebar button:hover {
+      background: #666;
+    }
+
+    #content {
+      margin-left: 240px;
+      padding: 20px;
+      display: none;
+    }
+
+    /* Caixas */
+    .box {
+      background: white;
+      padding: 20px;
+      border-radius: 8px;
+      margin-bottom: 20px;
+    }
+
+    input, textarea {
+      width: 100%;
+      padding: 8px;
+      margin: 5px 0;
+    }
+
+    button {
+      padding: 10px 20px;
+      cursor: pointer;
+    }
+
+    pre {
+      background: #222;
+      color: #0f0;
+      padding: 10px;
+      border-radius: 5px;
+    }
+
+    /* Login */
+    #login-screen {
+      max-width: 400px;
+      margin: 100px auto;
+      display: none;
+    }
   </style>
 </head>
 <body>
 
-  <h1>Painel Admin — FaturaLite Licenças</h1>
-
-  <div class="box">
-    <h2>Criar Pagamento</h2>
-    <input id="name" placeholder="Nome">
-    <input id="email" placeholder="Email">
-    <input id="phone" placeholder="Telefone">
-    <button onclick="createPayment()">Criar Pagamento</button>
+  <!-- LOGIN -->
+  <div id="login-screen" class="box">
+    <h2>Login Admin</h2>
+    <input id="loginSecret" placeholder="adminSecret">
+    <button onclick="doLogin()">Entrar</button>
   </div>
 
-  <div class="box">
-    <h2>Simular Pagamento</h2>
-    <input id="paymentId" placeholder="payment_id">
-    <input id="adminSecret" placeholder="adminSecret">
-    <button onclick="simulatePayment()">Simular Pagamento</button>
+  <!-- APP -->
+  <div id="sidebar">
+    <h2>Admin Licenças</h2>
+    <button onclick="showSection('dashboard')">Dashboard</button>
+    <button onclick="showSection('pagamentos')">Pagamentos</button>
+    <button onclick="showSection('licencas')">Licenças</button>
+    <button onclick="logout()">Logout</button>
   </div>
 
-  <div class="box">
-    <h2>Resultado</h2>
-    <pre id="output">Aguardando…</pre>
+  <div id="content">
+
+    <!-- DASHBOARD -->
+    <div id="dashboard" class="section box" style="display:none;">
+      <h2>Dashboard</h2>
+      <p>Aqui vão aparecer estatísticas.</p>
+    </div>
+
+    <!-- PAGAMENTOS -->
+    <div id="pagamentos" class="section" style="display:none;">
+
+      <div class="box">
+        <h2>Criar Pagamento</h2>
+        <input id="name" placeholder="Nome">
+        <input id="email" placeholder="Email">
+        <input id="phone" placeholder="Telefone">
+        <button onclick="createPayment()">Criar Pagamento</button>
+      </div>
+
+      <div class="box">
+        <h2>Pagamentos Pendentes</h2>
+        <button onclick="listPayments()">Carregar Pagamentos</button>
+        <div id="payments"></div>
+      </div>
+
+      <div class="box">
+        <h2>Simular Pagamento</h2>
+        <input id="paymentId" placeholder="payment_id">
+        <button onclick="simulatePayment()">Simular Pagamento</button>
+      </div>
+
+      <div class="box">
+        <h2>Resultado</h2>
+        <pre id="output">Aguardando…</pre>
+      </div>
+
+    </div>
+
+    <!-- LICENÇAS -->
+    <div id="licencas" class="section box" style="display:none;">
+      <h2>Licenças</h2>
+      <p>Aqui vamos listar as licenças.</p>
+    </div>
+
   </div>
 
+  <!-- SCRIPTS -->
+  <script src="components/auth.js"></script>
   <script src="admin.js"></script>
+
+  <script>
+    function showSection(id) {
+      document.querySelectorAll(".section").forEach(sec => sec.style.display = "none");
+      document.getElementById(id).style.display = "block";
+    }
+  </script>
+
 </body>
 </html>
