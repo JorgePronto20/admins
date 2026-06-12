@@ -71,6 +71,92 @@ async function loadDashboard() {
     </div>
   `;
 }
+// ===============================
+// LICENÇAS
+// ===============================
+
+async function listLicenses() {
+  const res = await fetch(API, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      action: "list",
+      adminSecret: ADMIN_SECRET
+    })
+  });
+
+  const data = await res.json();
+
+  if (!data.ok) {
+    document.getElementById("licenses").innerHTML = "<p>Erro ao carregar licenças.</p>";
+    return;
+  }
+
+  const licenses = data.licenses.filter(x => x.license_key);
+
+  if (licenses.length === 0) {
+    document.getElementById("licenses").innerHTML = "<p>Nenhuma licença emitida.</p>";
+    return;
+  }
+
+  let html = `
+    <table border="1" cellpadding="6" cellspacing="0">
+      <tr>
+        <th>Licença</th>
+        <th>Nome</th>
+        <th>Email</th>
+        <th>Plano</th>
+        <th>Validade</th>
+        <th>Ações</th>
+      </tr>
+  `;
+
+  for (const lic of licenses) {
+    html += `
+      <tr>
+        <td>${lic.license_key}</td>
+        <td>${lic.name}</td>
+        <td>${lic.email}</td>
+        <td>${lic.plan || "-"}</td>
+        <td>${lic.expiry || "-"}</td>
+        <td>
+          <button onclick="copyLicense('${lic.license_key}')">Copiar</button>
+          <button onclick="showLicenseDetails('${lic.license_key}')">Detalhes</button>
+        </td>
+      </tr>
+    `;
+  }
+
+  html += "</table>";
+
+  document.getElementById("licenses").innerHTML = html;
+}
+
+
+// Copiar licença para clipboard
+function copyLicense(key) {
+  navigator.clipboard.writeText(key);
+  alert("Licença copiada: " + key);
+}
+
+
+// Mostrar detalhes da licença
+async function showLicenseDetails(key) {
+  const res = await fetch(API, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      action: "list",
+      adminSecret: ADMIN_SECRET
+    })
+  });
+
+  const data = await res.json();
+  const lic = data.licenses.find(x => x.license_key === key);
+
+  document.getElementById("licenseDetails").textContent =
+    JSON.stringify(lic, null, 2);
+}
 
   initApp();
 }
