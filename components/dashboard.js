@@ -16,8 +16,27 @@ async function loadDashboard() {
 
   const data = await res.json();
 
-  if (!data.ok) {
-    document.getElementById("dashboard").innerHTML = "<p>Erro ao carregar dashboard.</p>";
+  // Se não houver dados, tratamos como base vazia (não como erro)
+  if (!data.ok || !Array.isArray(data.licenses)) {
+    document.getElementById("dashboard").innerHTML = `
+      <h2>Dashboard</h2>
+      <div class="box">
+        <h3>Resumo</h3>
+        <p><strong>Pagamentos Pendentes:</strong> 0</p>
+        <p><strong>Pagamentos Concluídos:</strong> 0</p>
+        <p><strong>Licenças Emitidas:</strong> 0</p>
+      </div>
+
+      <div class="box">
+        <h3>Último Pagamento</h3>
+        <pre>Nenhum pagamento encontrado</pre>
+      </div>
+
+      <div class="box">
+        <h3>Última Licença Emitida</h3>
+        <pre>Nenhuma licença emitida</pre>
+      </div>
+    `;
     return;
   }
 
